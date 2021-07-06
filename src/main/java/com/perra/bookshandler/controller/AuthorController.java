@@ -1,14 +1,11 @@
 package com.perra.bookshandler.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.perra.bookshandler.model.Author;
-import com.perra.bookshandler.openlibrary.AuthorSearch;
 import com.perra.bookshandler.openlibrary.OLAuthor;
 import com.perra.bookshandler.openlibrary.OLAuthorRepository;
 import com.perra.bookshandler.openlibrary.OpenLibrary;
-import com.perra.bookshandler.openlibrary.WorksByAuthorKey;
-import com.perra.bookshandler.repository.AuthorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,6 +44,7 @@ public class AuthorController {
 		OLAuthor savedAuthor = authorRepository.findByKey(key);
 		OLAuthor author = openLibrary.findAuthorByKey(key);
 		author.setBooks(openLibrary.findAuthorWorksByAuthorKey(key));
+		author.setSaved(true);
 
 		if (savedAuthor != null)
 			author.setId(savedAuthor.getId());
@@ -63,10 +61,26 @@ public class AuthorController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/search/authors")
 	public List<OLAuthor> searchAuthors(@RequestParam(value = "name") String name) {
+		List<OLAuthor> authors = openLibrary.findAuthorsByName(name);
+		List<String> keys = new ArrayList<String>();
+		for (int k = 0; k < authors.size(); k++) {
+			keys.add(authors.get(k).getKey());
+		}
+
+		List<OLAuthor> authorsSaved = this.authorRepository.findByKeyIn(keys);
+
 		// TODO
-		// search in DB
-		// fusionner
-		System.out.println("laaa" + name);
-		return openLibrary.findAuthorsByName(name);
+		for (OLAuthor authorSaved : authorsSaved) {
+			if (authorSaved.getSaved()) {
+				for (OLAuthor author : authors) {
+					if (authorSaved.getKey().equals(author.getKey())){
+						author.setSaved(true);
+						break;
+					}
+				}
+			} 
+		}
+		
+		return authors;
 	}
 }

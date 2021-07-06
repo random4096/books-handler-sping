@@ -11,6 +11,7 @@ import org.springframework.data.annotation.Id;
 public class OLAuthor {
     @Id
     private String id;
+    private boolean saved;
 
     // Data from openlibrary
     private String key;
@@ -37,6 +38,13 @@ public class OLAuthor {
         this.id = id;
     }
 
+    public boolean getSaved() {
+        return this.saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
 
 
     public String getKey() {
