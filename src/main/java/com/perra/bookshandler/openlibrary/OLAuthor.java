@@ -11,6 +11,8 @@ import org.springframework.data.annotation.Id;
 public class OLAuthor {
     @Id
     private String id;
+
+    // Data from openlibrary
     private String key;
     @JsonProperty("alternate_names")
     private List<String> alternateNames;
@@ -34,6 +36,8 @@ public class OLAuthor {
     public void setId(String id) {
         this.id = id;
     }
+
+
 
     public String getKey() {
         return this.key;
@@ -93,7 +97,7 @@ public class OLAuthor {
 
     @Override
     public String toString() {
-        return "OLAuthor: key: " + this.key /*+ " type: " + this.type*/ + " name: " + this.name + " birthDate: "
+        return "OLAuthor: key: " + this.key + " name: " + this.name + " birthDate: "
                 + this.birthDate;
     }
 }

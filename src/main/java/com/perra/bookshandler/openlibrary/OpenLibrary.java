@@ -1,5 +1,7 @@
 package com.perra.bookshandler.openlibrary;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -9,16 +11,16 @@ public class OpenLibrary {
     private final RestTemplate restTemplate = new RestTemplate();
     private final String baseUrl = "https://openlibrary.org";
 
-    public AuthorSearch findAuthorByName(String name) {
+    public List<OLAuthor> findAuthorsByName(String name) {
         AuthorSearch authorSearch = restTemplate.getForObject(baseUrl + "/search/authors.json?q=" + name,
                 AuthorSearch.class);
-        return authorSearch;
+        return authorSearch.getDocs();
     }
 
-    public WorksByAuthorKey findAuthorWorksByAuthorKey(String key) {
+    public List<OLBook> findAuthorWorksByAuthorKey(String key) {
         WorksByAuthorKey worksByAuthorKey = restTemplate.getForObject(baseUrl + "/authors/" + key + "/works.json",
                 WorksByAuthorKey.class);
-        return worksByAuthorKey;
+        return worksByAuthorKey.getEntries();
     }
 
     public OLAuthor findAuthorByKey(String key) {

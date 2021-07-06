@@ -46,9 +46,7 @@ public class AuthorController {
 	public OLAuthor saveAuthor(@RequestParam(value = "key") String key) {
 		OLAuthor savedAuthor = authorRepository.findByKey(key);
 		OLAuthor author = openLibrary.findAuthorByKey(key);
-		WorksByAuthorKey worksByAuthorKey = openLibrary.findAuthorWorksByAuthorKey(key);
-		System.out.print(worksByAuthorKey.getEntries().get(0));
-		author.setBooks(worksByAuthorKey.getEntries());
+		author.setBooks(openLibrary.findAuthorWorksByAuthorKey(key));
 
 		if (savedAuthor != null)
 			author.setId(savedAuthor.getId());
@@ -60,5 +58,15 @@ public class AuthorController {
 	@PutMapping("/author")
 	public OLAuthor updateAuthor(@RequestBody OLAuthor author) {
 		return authorRepository.save(author);
+	}
+
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/search/authors")
+	public List<OLAuthor> searchAuthors(@RequestParam(value = "name") String name) {
+		// TODO
+		// search in DB
+		// fusionner
+		System.out.println("laaa" + name);
+		return openLibrary.findAuthorsByName(name);
 	}
 }

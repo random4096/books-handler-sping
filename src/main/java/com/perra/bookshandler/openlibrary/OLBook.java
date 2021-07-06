@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OLBook {
 
-    //private String description;
+    private boolean read;
+    private boolean owned;
+    
+    // Data from openlibrary
     private Object description;
     private String title;
     private String key;
@@ -13,14 +16,26 @@ public class OLBook {
 
     public OLBook() {}
 
-    /*public String getDescription() {
-        return this.description;
+    public boolean getRead() {
+        return this.read;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }*/
+    public void setRead(boolean read) {
+        this.read = read;
+    }
 
+    public boolean getOwned() {
+        return this.owned;
+    }
+
+    public void setOwned(boolean owned) {
+        this.owned = owned;
+    }
+
+
+
+
+    // Data from openlibrary
     public Object getDescription() {
         return this.description;
     }
@@ -55,7 +70,7 @@ public class OLBook {
 
     @Override
     public String toString() {
-        String s = "OLBook: title: " + this.title;
+        String s = "\nOLBook: title: " + this.title;
         s += " key: " + this.key;
         if (this.subjects != null && this.subjects.length > 0) {
             s += "\nsubjects: ";
