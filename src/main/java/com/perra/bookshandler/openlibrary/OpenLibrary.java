@@ -28,4 +28,9 @@ public class OpenLibrary {
         author.setKey(key);
         return author;
     }
+
+    public OLBook findBookByISBN(String isbn) {
+        OLBook book = restTemplate.getForObject(baseUrl + "/isbn/" + isbn + ".json", OLBook.class);
+        return book;
+    }
 }
