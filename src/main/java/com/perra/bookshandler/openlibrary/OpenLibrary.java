@@ -36,8 +36,9 @@ public class OpenLibrary {
         return book;
     }
 
+    @SuppressWarnings("unchecked") // TODO not pretty
     public List<OLBook> searchBooksbyTitle(String title) {
-        // TODO not pretty
+        
         List<OLBook> books = (List<OLBook>)(Object)
             (restTemplate.getForObject(baseUrl + "/search.json?title=" + title, Search.class).getDocs());
         return books;

@@ -66,6 +66,6 @@ public class BookController {
 	public List<OLBook> getByTitle(@RequestParam(value = "title") String title) {
 		List<OLBook> books = this.openLibrary.searchBooksbyTitle(title);
 		// TODO search in repos
-		return this.openLibrary.searchBooksbyTitle(title);
+		return books;
 	}
 }

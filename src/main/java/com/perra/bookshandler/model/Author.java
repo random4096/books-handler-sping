@@ -2,6 +2,7 @@ package com.perra.bookshandler.model;
 
 import org.springframework.data.annotation.Id;
 
+@SuppressWarnings("all") // TODO not pretty
 public class Author {
 
     @Id
