@@ -5,4 +5,5 @@ import com.perra.bookshandler.model.Book;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface BookRepository extends MongoRepository<Book, String> {
+    Book findByIsbn10(String isbn10);
 }

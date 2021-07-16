@@ -1,5 +1,7 @@
 package com.perra.bookshandler.model;
 
+import com.perra.bookshandler.openlibrary.OLBook;
+
 import org.springframework.data.annotation.Id;
 
 public class Book {
@@ -12,8 +14,15 @@ public class Book {
     // Data from openlibrary
     private Object description;
     private String title;
+    private String isbn10;
 
     public Book() {}
+
+    public Book(OLBook book) {
+        this.description = book.getDescription();
+        this.title = book.getTitle();
+        this.isbn10 = book.getIsbn_10();
+    }
 
     public String getId() {
         return this.id;
@@ -59,9 +68,18 @@ public class Book {
         this.title = title;
     }
 
+    public String getIsbn10() {
+        return this.isbn10;
+    }
+
+    public void setIsbn10(String isbn10) {
+        this.isbn10 = isbn10;
+    }
+
     @Override
     public String toString() {
         String s = "\nBook: title: " + this.title;
+        s += " isbn: " + this.isbn10;
         if (this.description != null) s += "\ndesc: " + this.description.toString();
         return s;
     }

@@ -11,6 +11,7 @@ public class OpenLibrary {
     private final RestTemplate restTemplate = new RestTemplate();
     private final String baseUrl = "https://openlibrary.org";
 
+    // AUTHORS
     public List<OLAuthor> findAuthorsByName(String name) {
         AuthorSearch authorSearch = restTemplate.getForObject(baseUrl + "/search/authors.json?q=" + name,
                 AuthorSearch.class);
@@ -29,8 +30,16 @@ public class OpenLibrary {
         return author;
     }
 
+    // BOOKS
     public OLBook findBookByISBN(String isbn) {
         OLBook book = restTemplate.getForObject(baseUrl + "/isbn/" + isbn + ".json", OLBook.class);
         return book;
+    }
+
+    public List<OLBook> searchBooksbyTitle(String title) {
+        // TODO not pretty
+        List<OLBook> books = (List<OLBook>)(Object)
+            (restTemplate.getForObject(baseUrl + "/search.json?title=" + title, Search.class).getDocs());
+        return books;
     }
 }
