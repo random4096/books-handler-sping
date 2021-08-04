@@ -10,11 +10,14 @@ public class Book {
     private String id;
     private boolean read;
     private boolean owned;
+    private String savedDate;
     
     // Data from openlibrary
     private Object description;
     private String title;
     private String isbn10;
+    private String key;
+    private String authorKey;
 
     public Book() {}
 
@@ -22,6 +25,8 @@ public class Book {
         this.description = book.getDescription();
         this.title = book.getTitle();
         this.isbn10 = book.getIsbn_10();
+        this.key = book.getKey();
+        this.authorKey = book.getAuthorKey();
     }
 
     public String getId() {
@@ -76,10 +81,26 @@ public class Book {
         this.isbn10 = isbn10;
     }
 
+    public String getKey() {
+        return this.key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getAuthorKey() {
+        return this.authorKey;
+    }
+
+    public void setAuthorKey(String authorKey) {
+        this.authorKey = authorKey;
+    }
+
     @Override
     public String toString() {
         String s = "\nBook: title: " + this.title;
-        s += " isbn: " + this.isbn10;
+        s += " isbn: " + this.isbn10+ " read " + this.read+ " owned " + this.owned;
         if (this.description != null) s += "\ndesc: " + this.description.toString();
         return s;
     }

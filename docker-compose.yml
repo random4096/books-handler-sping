@@ -1,14 +1,18 @@
 version: "3.8"
 
 services:
-    books:
-        image: books
+    back:
+        image: books-back
         ports:
             - 8080:8080
+            
+    front:
+        image: books-front
+        ports:
+            - 4200:4200
+
     mongodb:
         image: mongo:latest
         container_name: mongodb
         ports:
             - 27017:27017
-        links:
-            - books
