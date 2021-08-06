@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.perra.bookshandler.openlibrary.model.OLDataBook;
 
 import org.springframework.data.annotation.Id;
 
@@ -25,7 +26,7 @@ public class OLAuthor {
     private String birthDate;
     private Object bio;
     
-    private List<OLBook> books;
+    private List<OLDataBook> books;
 
     public OLAuthor() {
     }
@@ -95,11 +96,11 @@ public class OLAuthor {
         this.bio = bio;
     }
 
-    public List<OLBook> getBooks() {
+    public List<OLDataBook> getBooks() {
         return this.books;
     }
 
-    public void setBooks(List<OLBook> books) {
+    public void setBooks(List<OLDataBook> books) {
         this.books = books;
     }
 

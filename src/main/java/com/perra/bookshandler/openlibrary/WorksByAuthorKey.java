@@ -3,18 +3,19 @@ package com.perra.bookshandler.openlibrary;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.perra.bookshandler.openlibrary.model.OLDataBook;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WorksByAuthorKey {
-    private List<OLBook> entries;
+    private List<OLDataBook> entries;
 
     public WorksByAuthorKey() {}
 
-    public List<OLBook> getEntries() {
+    public List<OLDataBook> getEntries() {
         return this.entries;
     }
 
-    public void setEntries(List<OLBook> entries) {
+    public void setEntries(List<OLDataBook> entries) {
         this.entries = entries;
     }
 
