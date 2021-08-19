@@ -3,7 +3,6 @@ package com.perra.bookshandler.openlibrary.model;
 import java.lang.reflect.Field;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,8 +10,6 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.perra.bookshandler.openlibrary.OLBook;
-
-import org.springframework.data.annotation.Id;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Key {

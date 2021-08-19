@@ -1,16 +1,13 @@
 package com.perra.bookshandler.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.perra.bookshandler.exception.RessourceNotFoundException;
 import com.perra.bookshandler.model.Book;
 import com.perra.bookshandler.openlibrary.OpenLibrary;
 import com.perra.bookshandler.openlibrary.model.OLDataBook;
-import com.perra.bookshandler.repository.BookRepository;
+import com.perra.bookshandler.service.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 
 	@Autowired
-	private BookRepository bookRepository;
+	private BookService bookService;
 
 	@Autowired
 	private OpenLibrary openLibrary;
@@ -33,7 +30,7 @@ public class BookController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/books")
 	public List<Book> all() {
-		return bookRepository.findAll();
+		return this.bookService.findAll();
 	}
 
 	// Push a book
@@ -43,15 +40,14 @@ public class BookController {
 		// if (bookRepository.findByKey(book.getKey()) != null)
 		// throw new RessourceAlreadyExistException("Book with key " + book.getKey() + "
 		// already exists.");
-		book.setSavedDate(java.time.LocalDateTime.now().toString());
-		return bookRepository.save(book);
+		return this.bookService.saveBook(book);
 	}
 
 	// Update a book
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PutMapping("/book")
 	public Book updateBook(@RequestBody Book book) {
-		return bookRepository.save(book);
+		return this.bookService.saveBook(book);
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -60,10 +56,7 @@ public class BookController {
 			@RequestParam(value = "requestOL", required = false, defaultValue = "false") String requestOL,
 			@RequestParam(value = "bibkey", required = true) String bibkey,
 			@RequestParam(value = "value", required = true) String value) {
-
-		if (bibkey.equals("isbn")) bibkey += "_" + value.length();
-
-		Book bookFromRepo = bookRepository.findByDataBibkeys(bibkey, value);
+		Book bookFromRepo = this.bookService.findByBibKeys(bibkey, value);
 
 		if (bookFromRepo == null) {
 			if (requestOL.equals("false")) {
@@ -84,7 +77,7 @@ public class BookController {
 	public List<Book> getByTitle(
 			@RequestParam(value = "requestOL", required = false, defaultValue = "false") String requestOL,
 			@RequestParam(value = "title") String title) {
-		List<Book> repoBooks = this.bookRepository.findByDataTitleContainingIgnoreCase(title);
+		List<Book> repoBooks = this.bookService.findByTitle(title);
 		if (!requestOL.equals("false")) {
 			List<OLDataBook> olBooks = this.openLibrary.searchBooksbyTitle(title);
 			List<Book> books = new ArrayList<Book>();
@@ -106,14 +99,5 @@ public class BookController {
 		}
 		
 		return repoBooks;
-	}
-
-	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("/books/test")
-	public Book get(@RequestParam(value = "isbn", required = false) String isbn) {
-		Book test = new Book(this.openLibrary.findBookByISBNAPI(isbn));
-		System.out.println(test.toString());
-		return test;
-
 	}
 }

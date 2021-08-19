@@ -1,11 +1,8 @@
 package com.perra.bookshandler.service;
 
-import java.util.Arrays;
 import java.util.List;
 
-import com.perra.bookshandler.exception.RessourceNotFoundException;
 import com.perra.bookshandler.model.Book;
-import com.perra.bookshandler.openlibrary.OpenLibrary;
 import com.perra.bookshandler.repository.BookRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +13,24 @@ public class BookService {
 
 	@Autowired
 	private BookRepository bookRepository;
-    
-	@Autowired
-	private OpenLibrary openLibrary;
 
-    public List<Book> getByISBN(String requestOL, String isbn) {
-		/*Book bookFromRepo = bookRepository.findByIsbn10(isbn);
-		if (bookFromRepo == null) {
-			if (requestOL.equals("false")) {
-				throw new RessourceNotFoundException("Book with ISBN " + isbn + " not found.");
-			}
-			try {
-				OLDataBook bookFromOL = openLibrary.findBookByISBN(isbn);
-				bookFromRepo = new Book(bookFromOL);
-			} catch (Exception e) {
-				throw new RessourceNotFoundException("Book with ISBN " + isbn + " not found." + e.getMessage());
-			}
-		}
-		return Arrays.asList(bookFromRepo);*/
-		return null;
+	public List<Book> findAll() {
+		return this.bookRepository.findAll();
 	}
+
+	public Book saveBook(Book book) {
+		if (book.getSavedDate() == null) book.setSavedDate(java.time.LocalDateTime.now().toString());
+		return this.bookRepository.save(book);
+	}
+    
+	public Book findByBibKeys(String bibKey, String value) {
+		if (bibKey.equals("isbn")) bibKey += "_" + value.length();
+
+		return this.bookRepository.findByDataBibkeys(bibKey, value);
+	}
+
+	public List<Book> findByTitle(String title) {
+		return this.bookRepository.findByDataTitleContainingIgnoreCase(title);
+	}
+
 }

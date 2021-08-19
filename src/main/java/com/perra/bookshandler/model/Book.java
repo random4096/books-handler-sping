@@ -13,6 +13,8 @@ public class Book {
     private boolean read;
     private boolean owned;
     private String savedDate;
+    private String lendPersonName;
+    private String lendDate;
     private OLDataBook data;
     
     public Book() {
@@ -61,6 +63,23 @@ public class Book {
 	public void setData(OLDataBook data) {
 		this.data = data; 
 	}
+
+	public String getLendPersonName() {
+		return this.lendPersonName;
+	}
+	
+	public void setLendPersonName(String lendPersonName) {
+		this.lendPersonName = lendPersonName; 
+	}
+
+	public String getLendDate() {
+		return this.lendDate;
+	}
+	
+	public void setLendDate(String lendDate) {
+		this.lendDate = lendDate; 
+	}
+
 
     @Override
     public String toString() {
